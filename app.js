@@ -1,8 +1,21 @@
 const express = require('express');
 const app = express();
 
-const apiRoutes = require('./routes/apiRoutes');
+const db = require("./models/db");
 
-app.use('/api',apiRoutes);
+const todoRoutes = require('./routes/todoRoutes');
+const userRoutes = require('./routes/userRoutes');
+
+// app.use(cors(corsOptions));
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/user',userRoutes);
+
+app.use('/api',todoRoutes);
+
+db.sequelize.sync();
 
 app.listen(3000);
